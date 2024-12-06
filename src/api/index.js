@@ -45,7 +45,7 @@ api.interceptors.response.use(
        localStorage.setItem('access_token', access);
 
        originalRequest.headers.Authorization = `Bearer ${access}`;
-       return api(originalRequest);  // Utiliser l'instance api au lieu de axios
+       return api(originalRequest);
      } catch (refreshError) {
        authService.logout();
        return Promise.reject(refreshError);
@@ -85,7 +85,7 @@ const trackingService = {
 
        const currentLocation = !isNaN(longitude) && !isNaN(latitude) 
          ? [longitude, latitude]
-         : [-72.3074, 18.5944]; // Coordonnées par défaut pour Port-au-Prince
+         : [-72.3074, 18.5944];
 
        return {
          id: bus.device_id,
@@ -120,11 +120,17 @@ const authService = {
  login: async (credentials) => {
    try {
      const response = await api.post('/auth/login/', credentials);
+     console.log("Réponse de login:", response.data);  // Log pour déboguer
+     
      const { tokens, user } = response.data;
      
+     // Stockage des tokens et données utilisateur
      localStorage.setItem('access_token', tokens.access);
      localStorage.setItem('refresh_token', tokens.refresh);
      localStorage.setItem('user_data', JSON.stringify(user));
+
+     // Force la redirection
+     window.location.href = '/dashboard';
 
      return {
        user: user,
@@ -145,9 +151,9 @@ const authService = {
    } catch (error) {
      console.error('Erreur lors de la déconnexion:', error);
    } finally {
-     localStorage.removeItem('access_token');
-     localStorage.removeItem('refresh_token');
-     localStorage.removeItem('user_data');
+     // Nettoyage du localStorage
+     localStorage.clear();
+     // Force la redirection
      window.location.href = '/login';
    }
  },
