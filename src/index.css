@@ -1,0 +1,109 @@
+@import 'mapbox-gl/dist/mapbox-gl.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer components {
+  /* Styles pour les marqueurs de bus */
+  .bus-marker {
+    @apply cursor-pointer transition-transform;
+  }
+
+  .bus-marker:hover {
+    @apply z-[2] scale-110;
+  }
+
+  /* Styles pour les popups Mapbox */
+  .mapboxgl-popup {
+    max-width: 300px !important;
+  }
+
+  .mapboxgl-popup-content {
+    @apply !p-0 !rounded-lg overflow-hidden shadow-lg;
+  }
+
+  /* Animation pour les mises à jour de position */
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .bus-marker-update {
+    animation: pulse 0.5s ease-in-out;
+  }
+
+  /* Personnalisation des contrôles Mapbox */
+  .mapboxgl-ctrl-top-right {
+    @apply !top-4 !right-4;
+  }
+
+  /* Styles pour le défilement */
+  .overflow-y-auto {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.300') transparent;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded;
+  }
+
+  /* Styles de la carte */
+  .mapboxgl-map {
+    @apply rounded-lg overflow-hidden;
+  }
+
+  .mapboxgl-ctrl-group {
+    @apply !shadow-lg !rounded-lg overflow-hidden;
+  }
+
+  .mapboxgl-ctrl button {
+    @apply !w-10 !h-10 hover:!bg-gray-50;
+  }
+
+  /* Améliorations visuelles supplémentaires */
+  .map-container {
+    @apply relative w-full h-full bg-gray-50;
+  }
+
+  .bus-info-card {
+    @apply bg-white/90 backdrop-blur-sm rounded-lg shadow-lg transition-all;
+  }
+
+  .bus-status-indicator {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+}
+
